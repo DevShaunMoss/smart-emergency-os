@@ -30,3 +30,35 @@ Process Created
 FCFS Scheduling Executed
 Priority Scheduling Executed
 Memory Allocation Executed
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+FCFS Scheduling Executed
+FCFS Scheduling Executed
+Memory Allocation Executed
+Process Created
+Process Created
+Process Created
+FCFS Scheduling Executed
+Priority Scheduling Executed
+Memory Allocation Executed
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created
+Process Created

@@ -3,6 +3,8 @@
 
 #define TOTAL_MEMORY 1000
 
+extern int remainingMemory;
+
 void AllocateMemory();
 
 #endif

@@ -1,17 +1,24 @@
+#include <windows.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "process.h"
 #include "memory.h"
-#include "process.h"
-#include "memory.h"
+
+extern char results[5000];
+extern HWND hMainWindow;
 
 int remainingMemory = TOTAL_MEMORY;
 
 void AllocateMemory()
 {
-    printf("\n=======================================================\n");
-    printf("MEMORY ALLOCATION (FIRST FIT)\n");
-    printf("=======================================================\n");
+    strcpy(results, "MEMORY ALLOCATION (FIRST FIT)\n\n");
+    sprintf(results + strlen(results),
+            "%-10s %-6s %-9s %-6s\n",
+            "PROCESS",
+            "REQ",
+            "STATUS",
+            "LEFT");
 
     for (int i = 0; i < processCount; i++)
     {
@@ -19,19 +26,26 @@ void AllocateMemory()
         {
             remainingMemory -= processes[i].memoryRequired;
 
-            printf("Process %s allocated %dMB memory\n",
-                   processes[i].name,
-                   processes[i].memoryRequired);
-
-            printf("Remaining Memory: %dMB\n\n",
-                   remainingMemory);
+            sprintf(results + strlen(results),
+                    "%-10.10s %-6d %-9s %-6d\n",
+                    processes[i].name,
+                    processes[i].memoryRequired,
+                    "Allocated",
+                    remainingMemory);
         }
         else
         {
-            printf("Not enough memory for process %s\n",
-                   processes[i].name);
+            sprintf(results + strlen(results),
+                    "%-10.10s %-6d %-9s %-6d\n",
+                    processes[i].name,
+                    processes[i].memoryRequired,
+                    "Denied",
+                    remainingMemory);
         }
     }
 
-    printf("=======================================================\n");
+    if (hMainWindow != NULL)
+    {
+        InvalidateRect(hMainWindow, NULL, TRUE);
+    }
 }

@@ -1,8 +1,12 @@
+#include <windows.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "process.h"
 #include "scheduling.h"
+
+extern char results[5000];
+extern HWND hMainWindow;
 
 void FCFSScheduling()
 {
@@ -30,26 +34,33 @@ void FCFSScheduling()
         totalTurnaroundTime += processes[i].turnaroundTime;
     }
 
-    printf("\n=======================================================\n");
-    printf("FCFS SCHEDULING\n");
-    printf("=======================================================\n");
-
-    printf("PID\tNAME\t\tWAITING\t\tTURNAROUND\n");
+    strcpy(results, "FCFS SCHEDULING\n\n");
+    sprintf(results + strlen(results),
+            "%-4s %-10s %-5s %-5s\n",
+            "PID",
+            "NAME",
+            "WAIT",
+            "TURN");
 
     for (int i = 0; i < processCount; i++)
     {
-        printf("%d\t%s\t\t%d\t\t%d\n",
-               processes[i].pid,
-               processes[i].name,
-               processes[i].waitingTime,
-               processes[i].turnaroundTime);
+        sprintf(results + strlen(results),
+                "%-4d %-10.10s %-5d %-5d\n",
+                processes[i].pid,
+                processes[i].name,
+                processes[i].waitingTime,
+                processes[i].turnaroundTime);
     }
 
-    printf("\nAverage Waiting Time: %.2f\n",
-           (float)totalWaitingTime / processCount);
+    sprintf(results + strlen(results),
+            "\nAverage Waiting: %.2f\nAverage Turnaround: %.2f",
+            (float)totalWaitingTime / processCount,
+            (float)totalTurnaroundTime / processCount);
 
-    printf("Average Turnaround Time: %.2f\n",
-           (float)totalTurnaroundTime / processCount);
+    if (hMainWindow != NULL)
+    {
+        InvalidateRect(hMainWindow, NULL, TRUE);
+    }
 }
 
 void PriorityScheduling()
@@ -94,27 +105,33 @@ void PriorityScheduling()
         totalTurnaroundTime += processes[i].turnaroundTime;
     }
 
-    printf("\n=======================================================\n");
-    printf("PRIORITY SCHEDULING\n");
-    printf("=======================================================\n");
-
-    printf("PID\tNAME\t\tPRIORITY\tWAIT\tTURNAROUND\n");
+    strcpy(results, "PRIORITY SCHEDULING\n\n");
+    sprintf(results + strlen(results),
+            "%-4s %-10s %-5s %-5s %-5s\n",
+            "PID",
+            "NAME",
+            "PRIO",
+            "WAIT",
+            "TURN");
 
     for (int i = 0; i < processCount; i++)
     {
-        printf("%d\t%s\t\t%d\t\t%d\t%d\n",
-               processes[i].pid,
-               processes[i].name,
-               processes[i].priority,
-               processes[i].waitingTime,
-               processes[i].turnaroundTime);
+        sprintf(results + strlen(results),
+                "%-4d %-10.10s %-5d %-5d %-5d\n",
+                processes[i].pid,
+                processes[i].name,
+                processes[i].priority,
+                processes[i].waitingTime,
+                processes[i].turnaroundTime);
     }
 
-    printf("\nAverage Waiting Time: %.2f\n",
-           (float)totalWaitingTime / processCount);
+    sprintf(results + strlen(results),
+            "\nAverage Waiting: %.2f\nAverage Turnaround: %.2f",
+            (float)totalWaitingTime / processCount,
+            (float)totalTurnaroundTime / processCount);
 
-    printf("Average Turnaround Time: %.2f\n",
-           (float)totalTurnaroundTime / processCount);
-
-    printf("=======================================================\n");
+    if (hMainWindow != NULL)
+    {
+        InvalidateRect(hMainWindow, NULL, TRUE);
+    }
 }
